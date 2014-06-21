@@ -1,0 +1,44 @@
+Name        : pciutils
+Version     : 3.2.1
+Release     : 1
+Group       : Applications/System
+License     : GPLv2
+Summary     : PCI bus related utilities
+Description : |
+  The pciutils package contains various utilities for inspecting and
+  setting devices connected to the PCI bus. The utilities provided
+  require kernel version 2.1.82 or newer (which support the
+  /proc/bus/pci interface).
+URL         : http://atrey.karlin.mff.cuni.cz/~mj/pciutils.shtml
+Sources     :
+    - "%{name}-%{version}.tar.xz"
+SetupOptions: -q -n %{name}-%{version}/upstream
+
+PkgBR:
+    - sed
+PkgConfigBR:
+    - zlib
+    - libkmod
+Requires:
+    - hwdata
+
+Configure: none
+Builder: none
+
+Files:
+    - "%doc README ChangeLog pciutils.lsm COPYING"
+    - "%{_sbindir}/*"
+    - "%{_mandir}/man8/*"
+    - "%{_libdir}/libpci.so.*"
+
+SubPackages:
+    - Name: devel
+      Summary: Linux PCI development library
+      Group: Development/Libraries
+      Description: |
+        This package contains a library for inspecting and setting
+        devices connected to the PCI bus.
+      Files:
+          - "%{_includedir}/pci"
+          - "%{_libdir}/pkgconfig/libpci.pc"
+          - "%{_libdir}/libpci.so"
